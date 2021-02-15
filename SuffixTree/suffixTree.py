@@ -3,7 +3,7 @@
 
 import sys
 
-from node import Node
+from .node import Node
 
 
 class SuffixTree:
