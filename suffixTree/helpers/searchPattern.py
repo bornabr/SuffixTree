@@ -3,20 +3,25 @@ from .base import Base
 class SearchPattern(Base):
 	def __init__(self, tree, pattern):
 		super(SearchPattern, self).__init__(tree)
+		self.stringsRange = []
+		index = 0
+		for string in self.tree.strings:
+			length = len(string)
+			self.stringsRange.append((index, index + length - 2))
+			index += length
 		self.pattern = pattern
 		self.patternLength = len(self.pattern)
-		self.charachterIndex = 0
 		self.matches = []
 
-
-	def traverseEdge(self, start, end):
+	def traverseEdge(self, start, end, charachterIndex):
 		k = start
-		while (k <= end and self.charachterIndex < self.patternLength):
-			if(self.string[k] != self.pattern[self.charachterIndex]):
+		while (k <= end and charachterIndex < self.patternLength):
+			# print('if', self.pattern[charachterIndex], self.string[k])
+			if(self.string[k] != self.pattern[charachterIndex]):
 				return -1
 			k += 1
-			self.charachterIndex += 1
-		if(k == self.patternLength):
+			charachterIndex += 1
+		if(charachterIndex == self.patternLength):
 			return 1
 		return 0
 	
@@ -37,14 +42,16 @@ class SearchPattern(Base):
 			return -1
 		return self.doTraversalToCountLeaf(node)
 	
-	def doTraversal(self, node):
+	def doTraversal(self, node, charachterIndex):
 		
 		if node is None:
 			return -1
 		
 		res = -1
+		# print(node)
 		if node.start != -1:
-			res = self.traverseEdge(node.start, node.end)
+			res = self.traverseEdge(node.start, node.end, charachterIndex)
+			# print('res', res)
 			if res == -1:
 				""" no match found """
 				return -1
@@ -56,12 +63,23 @@ class SearchPattern(Base):
 					self.countLeaf(node)
 					return self.matches
 		
-		self.charachterIndex += node.edge_length()
-		if(node.children[self.pattern[self.charachterIndex]]):
-			return self.doTraversal(node.children[self.pattern[self.charachterIndex]])
+		charachterIndex += node.edge_length()
+		# print(charachterIndex)
+		if(node.children.get(self.pattern[charachterIndex])):
+			return self.doTraversal(node.children.get(self.pattern[charachterIndex]), charachterIndex)
 		else:
 			return -1
 
 	def search(self):
-		self.charachterIndex = 0
-		return self.doTraversal(self.root)
+		positions = self.doTraversal(self.root, 0)
+		result = dict()
+		for position in positions:
+			for index, (start, end) in enumerate(self.stringsRange):
+				if start <= position <= end:
+					if(result.get(str(index))):
+						result.get(str(index)).append(position - start)
+					else:
+						result[str(index)] = []
+						result.get(str(index)).append(position - start)
+					break
+		return result

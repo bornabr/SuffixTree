@@ -1,8 +1,8 @@
 from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
 
-tree = SuffixTree(["GEEKSFORGEEKS"], True)
+tree = SuffixTree(["Geeksatb", "batl"], True)
 # tree.print_dfs()
 
-search = SearchPattern(tree, "G")
+search = SearchPattern(tree, "at")
 print(search.search())

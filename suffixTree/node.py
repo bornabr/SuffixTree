@@ -27,6 +27,10 @@ class Node:
 		atg = attrgetter('start', 'end', 'suffixIndex')
 		return atg(self) != atg(node)
 
+	def __str__(self):
+		atg = attrgetter('start', 'end', 'suffixIndex')
+		return str(atg(self))
+
 	def __getattribute__(self, name):
 		if name == 'end':
 			if self.leaf:
