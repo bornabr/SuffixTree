@@ -41,8 +41,8 @@ class SuffixTree:
 		Unicode Private Use Area U+E000..U+F8FF is used to ensure that terminal symbols
 		are not part of the input string. """
 		py2 = sys.version[0] < '3'
-		UPPAs = list(list(range(0xE000,0xF8FF+1)) + list(range(0xF0000,0xFFFFD+1)) + list(range(0x100000, 0x10FFFD+1)))
-		# UPPAs = map(lambda x: ord(x), ["$", "#", "%"])
+		# UPPAs = list(list(range(0xE000,0xF8FF+1)) + list(range(0xF0000,0xFFFFD+1)) + list(range(0x100000, 0x10FFFD+1)))
+		UPPAs = map(lambda x: ord(x), ["$", "#", "%"])
 		for i in UPPAs:
 			if py2:
 				yield(unichr(i))
@@ -83,7 +83,7 @@ class SuffixTree:
 	def extend(self, phase):
 		""" Extension Rule 1, this takes care of extending all
 		leaves created so far in tree (trick 3 - Once a leaf, always a leaf) """
-		self.leafEnd += 1
+		self.leafEnd = phase
 
 		self.remainingSuffixCount += 1
 
@@ -143,8 +143,8 @@ class SuffixTree:
 					the tree). In this case, this is Extension Rule 2 """
 				splitEnd = next_node.start + self.activePoint['length'] - 1
 				splitNode = self.new_node(next_node.start, splitEnd)
-				self.activePoint["node"].children[self.activePoint["edge"]] = splitNode
-				splitNode.children[self.string[next_node.start]] = self.new_node(phase, leaf=True)
+				self.activePoint["node"].children[self.string[self.activePoint["edge"]]] = splitNode
+				splitNode.children[self.string[phase]] = self.new_node(phase, leaf=True)
 				next_node.start += self.activePoint['length']
 				splitNode.children[self.string[next_node.start]] = next_node
 				
@@ -168,7 +168,19 @@ class SuffixTree:
 			elif (self.activePoint["node"] != self.root):
 				""" APCFER2C2 """
 				self.activePoint["node"] = self.activePoint["node"].suffixLink
-			
+	
+	
+	def setSuffixIndexByDFS(self, node, labelHeight):
+		if(node is Node):
+			return
+		
+		isLeaf = True
+		for child in node.children.values():
+			isLeaf = False
+			self.setSuffixIndexByDFS(child, labelHeight + child.edge_length())
+
+		if(isLeaf):
+			node.suffixIndex = self.size - labelHeight
 
 	def build(self):
 		self.rootEnd = -1
@@ -177,6 +189,7 @@ class SuffixTree:
 		self.activePoint["node"] = self.root
 		for phase in range(self.size):
 			self.extend(phase)
+		self.setSuffixIndexByDFS(self.root, 0)
 	
 	def walk_dfs(self, current):
 		start, end = current.start, current.end

@@ -15,6 +15,8 @@ class Node:
 		self.tree = tree
 
 	def edge_length(self):
+		if(self == self.tree.root):
+			return 0
 		return self.end - self.start + 1
 
 	def __eq__(self, node):
