@@ -2,12 +2,13 @@ version: '3.9'
 
 services:
   suffixtree:
-    image: suffixtree
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: python:3.8-slim-buster
+    restart: unless-stopped
+    working_dir: /app
     volumes: 
       - ./:/app/
+      - ../suffixTree:/app/suffixTree
+    command: sh -c "python -m pip install -r requirements.txt && python app.py"
     ports:
       - 5000:5000
     environment: 
@@ -15,4 +16,6 @@ services:
       FLASK_DEBUG: 1
       FLASK_APP: app.py
       FLASK_ENV: development
+      PYTHONDONTWRITEBYTECODE: 1
+      PYTHONUNBUFFERED: 1
       

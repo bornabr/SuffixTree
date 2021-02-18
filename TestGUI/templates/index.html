@@ -6,21 +6,27 @@
 	<title>Suffix Tree</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link rel='stylesheet' type='text/css' media='screen' href='{{ url_for('static', filename='style.css') }}'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 	<script type="text/javascript" src='{{ url_for('static', filename='script.js') }}'></script>
 </head>
 
 <body>
 	<h1>Suffix Tree - Borna Barahimi</h1>
-	<button class="tablink" onclick="openPage('Section1', this, 'red')">Section 1</button>
+	<button id="defaultOpen" class="tablink" onclick="openPage('Section1', this, 'red')">Section 1</button>
 	<button class="tablink" onclick="openPage('Section2', this, 'green')" id="defaultOpen">Section 2</button>
 	<button class="tablink" onclick="openPage('Section3', this, 'blue')">Section 3</button>
 	<button class="tablink" onclick="openPage('Section4', this, 'orange')">Section 4</button>
 
 	<div id="Section1" class="tabcontent">
 		<h2>Section 1</h2>
-		<textarea class="input" rows="4" cols="50" type="textarea" name="strings" id="strings-input"
-			placeholder="string... (split strings with '>')"></textarea>
-		<input class="input"  type="text" name="pattern" id="pattern-input" placeholder="pattern...">
+		<form action="/api/search-pattern" method="POST" id="form-section-one">
+			<textarea class="input" rows="4" cols="50" type="textarea" name="strings" id="strings-input"
+				placeholder="string... (split strings with '>')"></textarea>
+			<input class="input" type="text" name="pattern" id="pattern-input" placeholder="pattern...">
+			<input type="submit" value="Submit">
+		</form>
+		<div id='section1-network' class="network"></div>
 	</div>
 
 	<div id="Section2" class="tabcontent">
