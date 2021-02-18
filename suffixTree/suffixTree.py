@@ -6,7 +6,7 @@ import sys
 from .node import Node
 
 
-class SuffixTree:
+class SuffixTree(object):
 	"""The Generilized Suffix Tree"""
 
 	def __init__(self, strings: list, buildNow=False):
@@ -191,18 +191,34 @@ class SuffixTree:
 			self.extend(phase)
 		self.setSuffixIndexByDFS(self.root, 0)
 	
-	def walk_dfs(self, current):
+	def walk_dfs(self, current, parent=None):
 		start, end = current.start, current.end
-		yield self.string[start: end + 1]
+		index = self.index
+		self.nodes.append({ 'id': index, 'label': str(index) })
+		if(parent is not None):
+			self.edges.append({
+				'from': parent,
+				'to': index,
+				'label': str(start) + ':' + str(end)
+			})
 
 		for node in current.children.values():
-			if node:
-				yield from self.walk_dfs(node)
+			self.index += 1
+			self.walk_dfs(node, index)
 	
-	def print_dfs(self):
-		for sub in self.walk_dfs(self.root):
-			print(sub)
+	def __dict__(self):
+		self.nodes = []
+		self.edges = []
+		self.index = 1
+		self.walk_dfs(self.root)
+		return {
+			'nodes': self.nodes,
+			'edges': self.edges
+		}
+	
+	def __str__(self):
+		return str(self.__dict__())
 
 if __name__ == '__main__':
 	tree = SuffixTree(["abcabxabcd"], True)
-	tree.print_dfs()
+	print(tree)

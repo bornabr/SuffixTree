@@ -72,6 +72,8 @@ class SearchPattern(Base):
 
 	def search(self):
 		positions = self.doTraversal(self.root, 0)
+		if(positions == -1):
+			return -1
 		result = dict()
 		for position in positions:
 			for index, (start, end) in enumerate(self.stringsRange):
