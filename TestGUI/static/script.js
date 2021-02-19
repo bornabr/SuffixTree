@@ -23,26 +23,35 @@ $(document).ready(function () {
 
 	$("#form-section-one").submit(function (e) {
 		e.preventDefault();
-		console.log($("#form-section-one").serializeArray())
+		$('#section1-result').empty()
+		$('#section1-result').hide()
+		$('#section1-network').hide()
+		serialize = $("#form-section-one").serializeArray()
+		if (!serialize.find(item => item.name == 'strings').value && serialize.find(item => item.name == 'strings').value == '')
+			return
 		$.post("/api/search-pattern",
 			$("#form-section-one").serializeArray(),
 			function (res) {
 				console.log(res)
 				tree = res.tree
-				var nodes = new vis.DataSet(tree.nodes);
+				let nodes = new vis.DataSet(tree.nodes);
 	
 				// create an array with edges
-				var edges = new vis.DataSet(tree.edges);
+				let edges = new vis.DataSet(tree.edges);
 	
 				// create a network
-				var container = document.getElementById("section1-network");
-				var data = {
+				let container = document.getElementById("section1-network");
+				let data = {
 					nodes: nodes,
 					edges: edges,
 				};
-				var options = {};
-				var network = new vis.Network(container, data, options);
+				let options = {};
+				let network = new vis.Network(container, data, options);
 				container.style.display = "block"
+				
+				result = res.result
+				$('#section1-result').append(`<pre>${JSON.stringify(res.result, null, 2)}</pre>`)
+				$('#section1-result').show()
 			});
 		
 	});

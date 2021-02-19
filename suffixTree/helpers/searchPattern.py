@@ -71,6 +71,8 @@ class SearchPattern(Base):
 			return -1
 
 	def search(self):
+		if(self.patternLength == 0):
+			return -1
 		positions = self.doTraversal(self.root, 0)
 		if(positions == -1):
 			return -1
