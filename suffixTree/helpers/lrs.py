@@ -6,7 +6,6 @@ class LRS(Base):
 
 	def __init__(self, tree, k):
 		super(LRS, self).__init__(tree)
-		# TODO: makes it for at least k repeat
 		self.k = k
 		self.maxHeight = 0
 		self.currentHeight = 0
@@ -22,8 +21,7 @@ class LRS(Base):
 			return 0
 		if not node.leaf:
 			count = 0
-			for childKey in node.children.keys():
-				child = node.children[childKey]
+			for child in node.children.values():
 				res = self.doTraversal(child, labelHeight + child.edge_length())
 				if node == self.root:
 					# print(childKey, res)
