@@ -9,12 +9,17 @@ from .node import Node
 class SuffixTree(object):
 	"""The Generilized Suffix Tree"""
 
-	def __init__(self, strings: list, buildNow=False):
+	def __init__(self, strings: list, buildNow=False, checkForPalindrom=False):
 		self.terminalSymbolsGenerator = self._terminalSymbolsGenerator()
+		self.checkForPalindrom = checkForPalindrom
 		
 		self.strings = list()
-		for string in strings:
-			self.strings.append(string + self.terminalSymbolsGenerator.__next__())
+		if self.checkForPalindrom:
+			self.strings.append(strings[0] + '#')
+			self.strings.append(strings[0][::-1] + '$')
+		else:
+			for string in strings:
+				self.strings.append(string + self.terminalSymbolsGenerator.__next__())
 		self.string = "".join(self.strings)
 
 		self.lastNewNode = None
@@ -178,9 +183,20 @@ class SuffixTree(object):
 		for child in node.children.values():
 			isLeaf = False
 			self.setSuffixIndexByDFS(child, labelHeight + child.edge_length())
-
+			if node != self.root:
+				node.forwardIndices = node.forwardIndices.union(child.forwardIndices)
+				node.reverseIndices = node.reverseIndices.union(child.reverseIndices)
 		if(isLeaf):
+			for i in range(node.start, node.end + 1):
+				if(self.string[i] == '#'):
+					node.end = i
 			node.suffixIndex = self.size - labelHeight
+			
+			if (node.suffixIndex < len(self.strings[0])):
+				node.forwardIndices.add(node.suffixIndex)
+			else:
+				node.reverseIndices.add(node.suffixIndex - len(self.strings[0]))
+
 
 	def build(self):
 		self.rootEnd = -1

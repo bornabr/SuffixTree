@@ -14,6 +14,7 @@ from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
 from suffixTree.helpers.lrs import LRS
 from suffixTree.helpers.lcs import LCS
+from suffixTree.helpers.lps import LPS
 
 tree = SuffixTree(["Geeksatb", "batl"], True)
 
@@ -40,6 +41,15 @@ print(lcs.find())
 
 """ Output
 	abxa
+"""
+
+tree = SuffixTree(["xababayz"], True, True)
+
+lps = LPS(tree, 2)
+print(lps.find())
+
+""" Output
+	ababa
 """
 ```
 #

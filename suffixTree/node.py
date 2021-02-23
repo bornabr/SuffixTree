@@ -12,6 +12,8 @@ class Node:
 		self.start = None
 		self.end = None 
 		self.suffixLink = None
+		self.forwardIndices = set()
+		self.reverseIndices = set()
 		self.tree = tree
 
 	def edge_length(self):
