@@ -18,8 +18,6 @@ class LPS(Base):
 			return
 
 		if not node.leaf:
-			# strings that this node path to its leaf generate are suffix of which of the first strings of this tree
-			node.strings = set([])
 			for child in node.children.values():
 				self.doTraversal(child, labelHeight + child.edge_length())
 				if self.maxHeight < labelHeight and len(node.forwardIndices) > 0 and len(node.reverseIndices) > 0:
