@@ -53,3 +53,31 @@ html {
 .input {
     width: 100%;
 }
+
+.section {
+    width: 500px;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #4CAF50;
+    border: none;
+    width: 60%;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: green;
+}
