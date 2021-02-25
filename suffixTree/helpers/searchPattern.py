@@ -80,10 +80,10 @@ class SearchPattern(Base):
 		for position in positions:
 			for index, (start, end) in enumerate(self.stringsRange):
 				if start <= position <= end:
-					if(result.get(str(index))):
-						result.get(str(index)).append(position - start)
+					if(result.get(self.tree.titles[index])):
+						result.get(self.tree.titles[index]).append(position - start)
 					else:
-						result[str(index)] = []
-						result.get(str(index)).append(position - start)
+						result[self.tree.titles[index]] = []
+						result.get(self.tree.titles[index]).append(position - start)
 					break
 		return result

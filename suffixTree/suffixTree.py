@@ -12,16 +12,26 @@ class SuffixTree(object):
 	def __init__(self, strings: list, buildNow=False, checkForPalindrom=False):
 		self.terminalSymbolsGenerator = self._terminalSymbolsGenerator()
 		self.checkForPalindrom = checkForPalindrom
-		
 		self.strings = list()
+		self.titles = list()
 		if self.checkForPalindrom:
-			self.strings.append(strings[0] + '#')
-			self.strings.append(strings[0][::-1] + '$')
+			if isinstance(strings[0], tuple):
+				self.strings.append(strings[0][1] + '#')
+				self.strings.append(strings[0][1][::-1] + '$')
+				self.titles.append(strings[0][0])
+			else:
+				self.strings.append(strings[0] + '#')
+				self.strings.append(strings[0][::-1] + '$')
+				self.titles.append('0')
 		else:
-			for string in strings:
-				self.strings.append(string + self.terminalSymbolsGenerator.__next__())
+			for index, string in enumerate(strings):
+				if isinstance(string, tuple):
+					self.strings.append(string[1] + self.terminalSymbolsGenerator.__next__())
+					self.titles.append(string[0])
+				else:
+					self.strings.append(string + self.terminalSymbolsGenerator.__next__())
+					self.titles.append(str(index))
 		self.string = "".join(self.strings)
-
 		self.lastNewNode = None
 
 		""" active point is stored a dict {node, edge, length},
