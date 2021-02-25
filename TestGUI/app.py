@@ -31,7 +31,6 @@ def search_pattern():
     checker = SearchPattern(tree, pattern)
     result = {'tree_simple_view': tree.simple_view(),
               'result': checker.search()}
-    print(result)
     return jsonify(result)
 
 
