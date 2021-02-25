@@ -71,6 +71,32 @@ function lrs (data) {
 		});
 }
 
+function lcs (data) {
+	$.post("/api/lcs",
+		data,
+		function (res) {
+			console.log(res)
+			tree = res.tree_simple_view
+			result = res.result
+			console.log(tree)
+			$('#section3-network').val(tree)
+			$('#section3-network').show()
+			$('#section3-result').append(`<pre>${result}</pre>`)
+			$('#section3-result').show()
+			try {
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff', ], { type: 'text/plain' }));
+				link.setAttribute('download', 'result');
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			} catch(err) {
+				console.log(err)
+			}
+			
+		});
+}
+
 $(document).ready(function () {
 	document.getElementById("defaultOpen").click();
 
@@ -148,4 +174,43 @@ $(document).ready(function () {
 			lrs(data)
 		}
 	});
+	
+	$("#form-section-three").submit(function (e) {
+		e.preventDefault();
+		$('#section3-result').empty()
+		$('#section3-result').hide()
+		$('#section3-network').hide()
+		const serialized = $("#form-section-three").serializeArray()
+		const data = {}
+		serialized.forEach(({ name, value }) => data[name] = value);
+		console.log(data)
+		if (!data.strings || data.strings == '') {
+			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+				alert('The File APIs are not fully supported in this browser.');
+				return;
+			}
+			let inputFile = document.getElementById('file-input-2');
+			if (!inputFile) {
+				alert("Um, couldn't find the fileinput element.");
+			}
+			else if (!inputFile.files) {
+				alert("This browser doesn't seem to support the `files` property of file inputs.");
+			}
+			else if (!inputFile.files[0]) {
+				alert("Please select a file before submiting");
+			}
+			else {
+				let file = inputFile.files[0];
+				let fr = new FileReader();
+				fr.readAsText(file);
+				fr.onload = () => {
+					data.strings = fr.result
+					lcs(data)
+				}
+			}
+		} else {
+			lcs(data)
+		}
+	});
+	
 });

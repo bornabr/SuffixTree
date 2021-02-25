@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, request
 from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
 from suffixTree.helpers.lrs import LRS
+from suffixTree.helpers.lcs import LCS
 
 from fastaParser import SimpleFastaParser
 
@@ -67,6 +68,25 @@ def lrs():
         k = 0
     k = int(k)
     checker = LRS(tree, k)
+    result = {'tree_simple_view': simple_view(tree),
+              'result': checker.find()}
+    return jsonify(result)
+
+
+@app.route('/api/lcs', methods=['POST'])
+def lcs():
+    strings = request.form.get('strings')
+    if(strings is None or strings == ''):
+        strings = ''
+    strings = strings.splitlines()
+    strings = [(title, sequence)
+               for title, sequence in SimpleFastaParser(strings)]
+    tree = SuffixTree(strings, True)
+    k = request.form.get('k')
+    if(k is None or k == ''):
+        k = 0
+    k = int(k)
+    checker = LCS(tree, k)
     result = {'tree_simple_view': simple_view(tree),
               'result': checker.find()}
     return jsonify(result)

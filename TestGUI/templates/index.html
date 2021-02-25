@@ -42,14 +42,24 @@
 				<input class="input" type="number" name="k" id="k-input" placeholder="k">
 				<input type="submit" value="Submit" class="btn">
 			</form>
-			<textarea disabled id="section2-network" class="network"></textarea>
+			<textarea  id="section2-network" class="network"></textarea>
 			<div id="section2-result" class="result"></div>
 		</div>
 	</div>
 
 	<div id="Section3" class="tabcontent">
-		<h3>Contact</h3>
-		<p>Get in touch, or swing by for a cup of coffee.</p>
+		<div class='section'>
+		<h2>Section 3</h2>
+		<form action="/api/lrs" method="POST" id="form-section-three">
+			<input class="input" type="file" name="strings_file" id="file-input-3">
+			<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
+				placeholder="string... (split strings with '>')"></textarea>
+			<input class="input" type="number" name="k" id="k-input" placeholder="k">
+			<input type="submit" value="Submit" class="btn">
+		</form>
+		<textarea disabled id="section3-network" class="network"></textarea>
+		<div id="section3-result" class="result"></div>
+		</div>
 	</div>
 
 	<div id="Section4" class="tabcontent">
