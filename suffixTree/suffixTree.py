@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
-
 from .node import Node
 
-from io import StringIO
-from pptree import print_tree
+import sys
 
 class SuffixTree(object):
 	"""The Generilized Suffix Tree"""
@@ -246,19 +243,6 @@ class SuffixTree(object):
 	
 	def __str__(self):
 		return str(self.__dict__())
-
-	def simple_view(self):
-		old_stdout = sys.stdout
-		new_stdout = StringIO()
-		sys.stdout = new_stdout
-		
-		print_tree(self.root, 'childrenArray')
-		
-		output = new_stdout.getvalue()
-		
-		sys.stdout = old_stdout
-		
-		return output
 
 if __name__ == '__main__':
 	tree = SuffixTree(["abcabxabcd"], True)

@@ -6,10 +6,29 @@ from suffixTree.helpers.lrs import LRS
 
 from fastaParser import SimpleFastaParser
 
+from io import StringIO
+
+from pptree import print_tree
+
+import sys
+
 PORT = 5000
 HOST = '0.0.0.0'
 app = Flask(__name__)
 
+
+def simple_view(tree):
+	old_stdout = sys.stdout
+	new_stdout = StringIO()
+	sys.stdout = new_stdout
+
+	print_tree(tree.root, 'childrenArray')
+
+	output = new_stdout.getvalue()
+
+	sys.stdout = old_stdout
+
+	return output
 
 @app.route('/', methods=['GET'])
 def home():
@@ -29,7 +48,7 @@ def search_pattern():
     if(pattern is None or pattern == ''):
         pattern = ''
     checker = SearchPattern(tree, pattern)
-    result = {'tree_simple_view': tree.simple_view(),
+    result = {'tree_simple_view': simple_view(tree),
               'result': checker.search()}
     return jsonify(result)
 
@@ -48,7 +67,7 @@ def lrs():
         k = 0
     k = int(k)
     checker = LRS(tree, k)
-    result = {'tree_simple_view': tree.simple_view(),
+    result = {'tree_simple_view': simple_view(tree),
               'result': checker.find()}
     return jsonify(result)
 
