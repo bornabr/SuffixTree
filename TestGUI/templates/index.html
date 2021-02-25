@@ -22,8 +22,8 @@
 		<div class='section'>
 			<h2>Section 1</h2>
 			<form action="/api/search-pattern" method="POST" id="form-section-one">
-				<input class="input" type="file" name="strings_file" id="file-input">
-				<textarea class="input" rows="4" cols="50" type="textarea" name="strings" id="strings-input"
+				<input class="input" type="file" name="strings_file" id="file-input-1">
+				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
 				<input class="input" type="text" name="pattern" id="pattern-input" placeholder="pattern...">
 				<input type="submit" value="Submit" class="btn">
@@ -36,13 +36,15 @@
 	<div id="Section2" class="tabcontent">
 		<div class='section'>
 			<h2>Section 2</h2>
-			<form action="/api/lrs" method="POST" id="form-section-one">
-				<textarea class="input" rows="4" cols="50" type="textarea" name="strings" id="strings-input"
+			<form action="/api/lrs" method="POST" id="form-section-two">
+				<input class="input" type="file" name="strings_file" id="file-input-2">
+				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
+				<input class="input" type="number" name="k" id="k-input" placeholder="k">
 				<input type="submit" value="Submit" class="btn">
 			</form>
-			<div id="section1-network" class="network"></div>
-			<div id="section1-result" class="result"></div>
+			<div id="section2-network" class="network"></div>
+			<div id="section2-result" class="result"></div>
 		</div>
 	</div>
 

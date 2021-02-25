@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 
 from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
+from suffixTree.helpers.lrs import LRS
 
 from fastaParser import SimpleFastaParser
 
@@ -33,6 +34,25 @@ def search_pattern():
     print(result)
     return jsonify(result)
 
+
+@app.route('/api/lrs', methods=['POST'])
+def lrs():
+    strings = request.form.get('strings')
+    if(strings is None or strings == ''):
+        strings = ''
+    strings = strings.splitlines()
+    strings = [(title, sequence)
+               for title, sequence in SimpleFastaParser(strings)]
+    tree = SuffixTree(strings, True)
+    k = request.form.get('k')
+    if(k is None or k == ''):
+        k = 0
+    k = int(k)
+    checker = LRS(tree, k)
+    result = {'tree': tree.__dict__(),
+              'result': checker.find()}
+    print(result)
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host=HOST, port=PORT)
