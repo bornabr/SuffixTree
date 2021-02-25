@@ -4,7 +4,7 @@ from .base import Base
 class LPS(Base):
 	"""Longest Palindromic Substring"""
 
-	def __init__(self, tree, k):
+	def __init__(self, tree):
 		super(LPS, self).__init__(tree)
 		self.maxHeight = 0
 		self.substringStartIndex = 0

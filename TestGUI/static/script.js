@@ -97,6 +97,32 @@ function lcs (data) {
 		});
 }
 
+function lps(data) {
+	$.post("/api/lps",
+		data,
+		function (res) {
+			console.log(res)
+			tree = res.tree_simple_view
+			result = res.result
+			console.log(tree)
+			$('#section4-network').val(tree)
+			$('#section4-network').show()
+			$('#section4-result').append(`<pre>${result}</pre>`)
+			$('#section4-result').show()
+			try {
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff',], { type: 'text/plain' }));
+				link.setAttribute('download', 'result');
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			} catch (err) {
+				console.log(err)
+			}
+
+		});
+}
+
 $(document).ready(function () {
 	document.getElementById("defaultOpen").click();
 
@@ -189,7 +215,7 @@ $(document).ready(function () {
 				alert('The File APIs are not fully supported in this browser.');
 				return;
 			}
-			let inputFile = document.getElementById('file-input-2');
+			let inputFile = document.getElementById('file-input-3');
 			if (!inputFile) {
 				alert("Um, couldn't find the fileinput element.");
 			}
@@ -210,6 +236,44 @@ $(document).ready(function () {
 			}
 		} else {
 			lcs(data)
+		}
+	});
+	
+	$("#form-section-four").submit(function (e) {
+		e.preventDefault();
+		$('#section4-result').empty()
+		$('#section4-result').hide()
+		$('#section4-network').hide()
+		const serialized = $("#form-section-four").serializeArray()
+		const data = {}
+		serialized.forEach(({ name, value }) => data[name] = value);
+		console.log(data)
+		if (!data.strings || data.strings == '') {
+			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+				alert('The File APIs are not fully supported in this browser.');
+				return;
+			}
+			let inputFile = document.getElementById('file-input-4');
+			if (!inputFile) {
+				alert("Um, couldn't find the fileinput element.");
+			}
+			else if (!inputFile.files) {
+				alert("This browser doesn't seem to support the `files` property of file inputs.");
+			}
+			else if (!inputFile.files[0]) {
+				alert("Please select a file before submiting");
+			}
+			else {
+				let file = inputFile.files[0];
+				let fr = new FileReader();
+				fr.readAsText(file);
+				fr.onload = () => {
+					data.strings = fr.result
+					lps(data)
+				}
+			}
+		} else {
+			lps(data)
 		}
 	});
 	

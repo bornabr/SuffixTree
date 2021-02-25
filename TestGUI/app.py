@@ -4,6 +4,7 @@ from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
 from suffixTree.helpers.lrs import LRS
 from suffixTree.helpers.lcs import LCS
+from suffixTree.helpers.lps import LPS
 
 from fastaParser import SimpleFastaParser
 
@@ -87,6 +88,20 @@ def lcs():
         k = 0
     k = int(k)
     checker = LCS(tree, k)
+    result = {'tree_simple_view': simple_view(tree),
+              'result': checker.find()}
+    return jsonify(result)
+
+@app.route('/api/lps', methods=['POST'])
+def lps():
+    strings = request.form.get('strings')
+    if(strings is None or strings == ''):
+        strings = ''
+    strings = strings.splitlines()
+    strings = [(title, sequence)
+               for title, sequence in SimpleFastaParser(strings)]
+    tree = SuffixTree(strings, True, True)
+    checker = LPS(tree)
     result = {'tree_simple_view': simple_view(tree),
               'result': checker.find()}
     return jsonify(result)

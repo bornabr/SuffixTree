@@ -33,7 +33,7 @@ print(lcs.find())
 
 tree = SuffixTree(["xababayz"], True, True)
 
-lps = LPS(tree, 2)
+lps = LPS(tree)
 print(lps.find())
 
 """ Output
