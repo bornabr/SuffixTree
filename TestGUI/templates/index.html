@@ -7,7 +7,6 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<link rel='stylesheet' type='text/css' media='screen' href='{{ url_for('static', filename='style.css') }}'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 	<script type="text/javascript" src='{{ url_for('static', filename='script.js') }}'></script>
 </head>
 
@@ -28,7 +27,7 @@
 				<input class="input" type="text" name="pattern" id="pattern-input" placeholder="pattern...">
 				<input type="submit" value="Submit" class="btn">
 			</form>
-			<div id="section1-network" class="network"></div>
+			<textarea disabled id="section1-network" class="network"></textarea>
 			<div id="section1-result" class="result"></div>
 		</div>
 	</div>
@@ -43,7 +42,7 @@
 				<input class="input" type="number" name="k" id="k-input" placeholder="k">
 				<input type="submit" value="Submit" class="btn">
 			</form>
-			<div id="section2-network" class="network"></div>
+			<textarea disabled id="section2-network" class="network"></textarea>
 			<div id="section2-result" class="result"></div>
 		</div>
 	</div>

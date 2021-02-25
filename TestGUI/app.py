@@ -29,7 +29,7 @@ def search_pattern():
     if(pattern is None or pattern == ''):
         pattern = ''
     checker = SearchPattern(tree, pattern)
-    result = {'tree': tree.__dict__(),
+    result = {'tree_simple_view': tree.simple_view(),
               'result': checker.search()}
     print(result)
     return jsonify(result)
@@ -49,9 +49,8 @@ def lrs():
         k = 0
     k = int(k)
     checker = LRS(tree, k)
-    result = {'tree': tree.__dict__(),
+    result = {'tree_simple_view': tree.simple_view(),
               'result': checker.find()}
-    print(result)
     return jsonify(result)
 
 if __name__ == '__main__':

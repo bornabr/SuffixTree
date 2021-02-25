@@ -24,23 +24,11 @@ function search_pattern (data) {
 		data,
 		function (res) {
 			console.log(res)
-			tree = res.tree
-			let nodes = new vis.DataSet(tree.nodes);
-
-			// create an array with edges
-			let edges = new vis.DataSet(tree.edges);
-
-			// create a network
-			let container = document.getElementById("section1-network");
-			let data = {
-				nodes: nodes,
-				edges: edges,
-			};
-			let options = {};
-			let network = new vis.Network(container, data, options);
-			container.style.display = "block"
-
+			tree = res.tree_simple_view
 			result = res.result
+			console.log(tree)
+			$('#section1-network').val(tree)
+			$('#section1-network').show()
 			$('#section1-result').append(`<pre>${JSON.stringify(res.result, null, 2)}</pre>`)
 			$('#section1-result').show()
 			try {
@@ -62,28 +50,16 @@ function lrs (data) {
 		data,
 		function (res) {
 			console.log(res)
-			tree = res.tree
-			let nodes = new vis.DataSet(tree.nodes);
-
-			// create an array with edges
-			let edges = new vis.DataSet(tree.edges);
-
-			// create a network
-			let container = document.getElementById("section2-network");
-			let data = {
-				nodes: nodes,
-				edges: edges,
-			};
-			let options = {};
-			let network = new vis.Network(container, data, options);
-			container.style.display = "block"
-
+			tree = res.tree_simple_view
 			result = res.result
-			$('#section2-result').append(`<pre>${JSON.stringify(res.result, null, 2)}</pre>`)
+			console.log(tree)
+			$('#section2-network').val(tree)
+			$('#section2-network').show()
+			$('#section2-result').append(`<pre>${result}</pre>`)
 			$('#section2-result').show()
 			try {
 				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(new Blob(['\ufeff', JSON.stringify(result, null, 2)], { type: 'text/plain' }));
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff', ], { type: 'text/plain' }));
 				link.setAttribute('download', 'result');
 				document.body.appendChild(link);
 				link.click();

@@ -33,8 +33,14 @@ class Node:
 		atg = attrgetter('start', 'end', 'suffixIndex')
 		return str(atg(self))
 
+	def __hash__(self):
+		atg = attrgetter('start', 'end', 'suffixIndex')
+		return hash(atg(self))
+
 	def __getattribute__(self, name):
 		if name == 'end':
 			if self.leaf:
 				return self.tree.leafEnd
+		if name == 'childrenArray':
+			return self.children.values()
 		return super(Node, self).__getattribute__(name)
