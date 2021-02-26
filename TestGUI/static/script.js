@@ -59,7 +59,7 @@ function lrs (data) {
 			$('#section2-result').show()
 			try {
 				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(new Blob(['\ufeff', ], { type: 'text/plain' }));
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff', String(result)], { type: 'text/plain' }));
 				link.setAttribute('download', 'result');
 				document.body.appendChild(link);
 				link.click();
@@ -85,7 +85,7 @@ function lcs (data) {
 			$('#section3-result').show()
 			try {
 				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(new Blob(['\ufeff', ], { type: 'text/plain' }));
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff', String(result)], { type: 'text/plain' }));
 				link.setAttribute('download', 'result');
 				document.body.appendChild(link);
 				link.click();
@@ -111,7 +111,7 @@ function lps(data) {
 			$('#section4-result').show()
 			try {
 				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(new Blob(['\ufeff',], { type: 'text/plain' }));
+				link.href = window.URL.createObjectURL(new Blob(['\ufeff', String(result)], { type: 'text/plain' }));
 				link.setAttribute('download', 'result');
 				document.body.appendChild(link);
 				link.click();
