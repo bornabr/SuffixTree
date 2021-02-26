@@ -7,7 +7,6 @@ services:
     working_dir: /app
     volumes: 
       - ./:/app/
-      - ../suffixTree:/app/suffixTree
     command: sh -c "python -m pip install -r requirements.txt && python app.py"
     ports:
       - 5000:5000

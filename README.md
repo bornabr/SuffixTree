@@ -8,7 +8,21 @@ For using TestGUI you need to install docker and docker-compose first.
 [Get Docker](https://docs.docker.com/get-docker/)
 
 ## Usage
-
+For GUI testing
+If you have installed docker and docker compose do the following:
+```bash
+./run start
+```
+or
+```bash
+docker-compose up
+```
+and if you do not have docker and docker compose
+```bash
+python -m pip install -r requirements.txt && python app.py
+```
+then you could open [http://localhost:5000](http://localhost:5000) in your browser and continue.
+#
 ```python
 from suffixTree.suffixTree import SuffixTree
 from suffixTree.helpers.searchPattern import SearchPattern
@@ -52,18 +66,6 @@ print(lps.find())
 	ababa
 """
 ```
-#
-For using TestGUI
-```bash
-./run start
-```
-or
-```bash
-cd TestGUI
-docker-compose up
-```
-then you could open [http://localhost:5000](http://localhost:5000) in your browser and continue.
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
