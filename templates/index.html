@@ -12,15 +12,16 @@
 
 <body>
 	<h1>Suffix Tree - Borna Barahimi</h1>
-	<button id="defaultOpen" class="tablink" onclick="openPage('Section1', this, 'red')">Section 1</button>
-	<button class="tablink" onclick="openPage('Section2', this, 'green')" id="defaultOpen">Section 2</button>
-	<button class="tablink" onclick="openPage('Section3', this, 'blue')">Section 3</button>
-	<button class="tablink" onclick="openPage('Section4', this, 'orange')">Section 4</button>
+	<button id="defaultOpen" class="tablink" onclick="openPage('Section1', this, 'red')">Search pattern</button>
+	<button class="tablink" onclick="openPage('Section2', this, 'green')" id="defaultOpen">LRS</button>
+	<button class="tablink" onclick="openPage('Section3', this, 'blue')">LCS</button>
+	<button class="tablink" onclick="openPage('Section4', this, 'orange')">LPS</button>
 
 	<div id="Section1" class="tabcontent">
 		<div class='section'>
-			<h2>Section 1</h2>
+			<h2>Search pattern</h2>
 			<form action="/api/search-pattern" method="POST" id="form-section-one">
+				<p>Choose a file for strings or write it in the text area. PLEASE DO NOT DO BOTH!!<br>Also your string should be in FASTA format</p>
 				<input class="input" type="file" name="strings_file" id="file-input-1">
 				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
@@ -34,8 +35,10 @@
 
 	<div id="Section2" class="tabcontent">
 		<div class='section'>
-			<h2>Section 2</h2>
+			<h2>Longest Repeated Substring</h2>
 			<form action="/api/lrs" method="POST" id="form-section-two">
+				<p>Choose a file for strings or write it in the text area. PLEASE DO NOT DO BOTH!!<br>Also your string should be in
+					FASTA format</p>
 				<input class="input" type="file" name="strings_file" id="file-input-2">
 				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
@@ -49,8 +52,10 @@
 
 	<div id="Section3" class="tabcontent">
 		<div class='section'>
-			<h2>Section 3</h2>
+			<h2>Longest Common Substring</h2>
 			<form action="/api/lrs" method="POST" id="form-section-three">
+				<p>Choose a file for strings or write it in the text area. PLEASE DO NOT DO BOTH!!<br>Also your string should be in
+					FASTA format</p>
 				<input class="input" type="file" name="strings_file" id="file-input-3">
 				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
@@ -64,8 +69,10 @@
 
 	<div id="Section4" class="tabcontent">
 		<div class='section'>
-			<h2>Section 4</h2>
+			<h2>Longest Palindromic Substring</h2>
 			<form action="/api/lps" method="POST" id="form-section-four">
+				<p>Choose a file for strings or write it in the text area. PLEASE DO NOT DO BOTH!!<br>Also your string should be in
+					FASTA format</p>
 				<input class="input" type="file" name="strings_file" id="file-input-4">
 				<textarea class="input" rows="20" cols="50" type="textarea" name="strings" id="strings-input"
 					placeholder="string... (split strings with '>')"></textarea>
