@@ -24,24 +24,28 @@ class LRS(Base):
 			for child in node.children.values():
 				res = self.doTraversal(child, labelHeight + child.edge_length())
 				if node == self.root:
-					# print(childKey, res)
-					if res >= self.k:
+					if self.numberOfInternalNodes >= self.k:
 						if self.maxHeight < self.currentHeight:
 							self.maxHeight = self.currentHeight
-							self.subStringStartIndex = self.currentSubStringStartIndex
+							self.substringStartIndex = self.currentSubStringStartIndex
 					self.currentHeight = 0
 					self.currentSubStringStartIndex = 0
+					self.change = False
+					self.numberOfInternalNodes = 0
 				else:
 					count += res
+			if self.change:
+				self.numberOfInternalNodes = count
+				self.change = False
 			return count
 		elif self.currentHeight < labelHeight - node.edge_length():
-			# print(self.numberOfInternalNodes)
-			self.numberOfInternalNodes += 1
+			self.change = True
 			self.currentHeight = labelHeight - node.edge_length()
 			self.currentSubStringStartIndex = node.suffixIndex
 		return 1
 
 	def find(self):
+		self.change = False
 		self.maxHeight = 0
 		self.substringStartIndex = 0
 		self.numberOfInternalNodes = 0
